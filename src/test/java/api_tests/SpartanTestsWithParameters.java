@@ -1,5 +1,6 @@
 package api_tests;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,7 +12,7 @@ public class SpartanTestsWithParameters {
 
     @BeforeClass
     public static void setUp(){
-        RestAssured.baseURI = "http://100.26.130.128:8000/api/spartans/";
+        RestAssured.baseURI = "http://100.26.130.128:8000/api";
     }
 
     @Test
@@ -28,6 +29,18 @@ public class SpartanTestsWithParameters {
         assertTrue(response.headers().hasHeaderWithName("Date"));
         assertEquals("17", response.getHeader("Content-Length"));
         assertEquals("Hello from Sparta", response.body().asString());
+    }
+
+    @Test
+    public void getSpartanByID_Positive_Path_Param_Test(){
+        // request part
+        Response response = given().accept(ContentType.JSON)
+                            .and().pathParam("id", 67)
+                            .when().get("/spartans/{id}");
+        response.prettyPrint();
+        assertEquals(200, response.statusCode());
+        assertEquals("application/json", response.contentType());
+        assertTrue(response.body().asString().contains("Cucumber"));
     }
 
 }
