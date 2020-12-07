@@ -45,5 +45,23 @@ public class SpartanTests {
                 .and().contentType("application/json");
     }
 
+    /*
+    WHEN user sends get request to /spartans/62
+    THEN status code should be 200
+    AND content-type should be application/json
+    AND Json body should contain name "Test"
+     */
+
+    @Test
+    public void viewAllSpartansTest4() {
+
+        Response response = when().get(spartanAllURL + "65");
+        Assert.assertEquals(200, response.statusCode());
+        Assert.assertEquals("application/json", response.contentType());
+        Assert.assertTrue(response.body().asString().contains("Michael"));
+
+    }
+
+
 
 }
