@@ -43,4 +43,27 @@ public class SpartanTestsWithParameters {
         assertTrue(response.body().asString().contains("Cucumber"));
     }
 
+    @Test
+    public void getSpartanById_Negative_Path_Param_Test(){
+        //request
+        Response response = given().accept(ContentType.JSON)
+                            .and().pathParam("id", 1)
+                            .when().get("/spartans/{id}");
+        // response validations
+        assertEquals(404, response.statusCode());
+        assertEquals("application/json", response.contentType());
+        assertTrue(response.body().asString().contains("Spartan not found"));
+    }
+
+    @Test
+    public void positiveTestWithQueryParameters_Search(){
+        Response response = given().accept(ContentType.JSON)
+                            .queryParams("gender", "Female", "nameConatins", "e")
+                            .when().get("/spartans/search");
+        assertEquals(200, response.statusCode());
+        assertEquals("application/json", response.contentType());
+        assertTrue(response.body().asString().contains("Female"));
+
+    }
+
 }
