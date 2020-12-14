@@ -111,9 +111,6 @@ public class SpartanTestsWithParameters {
         assertTrue(response2.body().asString().contains("Could not find acceptable representation"));
         assertTrue(response3.body().asString().contains("Could not find acceptable representation"));
 
-
-
-
     }
 
 
